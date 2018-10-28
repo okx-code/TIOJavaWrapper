@@ -2,6 +2,7 @@ package run.tio.java;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -86,7 +87,7 @@ public class TIO {
 
   @Data
   @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-  static final class Result {
+  public static final class Result {
     private final String output;
     private final String debug;
     private final long realMillis;
@@ -97,11 +98,12 @@ public class TIO {
     private final State state;
 
     @RequiredArgsConstructor
-    enum State {
+    public enum State {
       SUCCESS(""),
       OUTPUT_TRUNCATED("The output exceeded 128 KiB and was truncated.\n"),
       TIMEOUT("The request exceeded the 60 second time limit and was terminated.\n");
 
+      @Getter
       private final String message;
 
       public static State fromMessage(String message) {
