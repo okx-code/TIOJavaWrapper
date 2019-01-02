@@ -55,4 +55,13 @@ public class TIOTest {
         "public static void main(String[] args)throws Exception{Thread.sleep(61*1000);}}", "input");
     assertEquals(TIO.Result.State.TIMEOUT, result.getState());
   }
+
+  @Test
+  public void testCurry() throws IOException {
+    TIO.Result result = tio.run("bash", "cat > code.lcurry\n" +
+        "/opt/curry-pakcs/bin/pakcs :load code.lcurry :save :quit > /dev/null\n" +
+        "./code", "> main = putStr \"hi\"");
+    assertEquals(TIO.Result.State.SUCCESS, result.getState());
+    assertEquals("hi", result.getOutput());
+  }
 }
